@@ -6,16 +6,19 @@ public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager Instance; // Singleton instance for global access
 
-    public TextMeshProUGUI playerScoreText; // Reference to the Player's score UI text
-    public TextMeshProUGUI npcScoreText; // Reference to the NPC's score UI text
+    public TextMeshProUGUI playerScoreText; // Player score UI text
+    public TextMeshProUGUI npcScoreText; // NPC score UI text
     public TextMeshProUGUI countdownMessage;
+    public GameObject winScreenCanvas; // Reference to Win Screen UI
+    public GameObject loseScreenCanvas; // Reference to Lose Screen UI
 
     private int playerScore = 0; // Player's score
     private int npcScore = 0; // NPC's score
+    private int winScore = 7; // Score required to win
+    private int loseScore = 7; // Score required to lose
 
     void Awake()
     {
-        // Ensure there's only one instance of the ScoreManager
         if (Instance == null)
         {
             Instance = this;
@@ -26,21 +29,31 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
-    // Method to increase the player's score
+    // Add points to the player and check for win condition
     public void AddPlayerScore(int amount)
     {
         playerScore += amount;
         UpdatePlayerScoreUI();
+
+        if (playerScore >= winScore)
+        {
+            ShowWinScreen();
+        }
     }
 
-    // Method to increase the NPC's score
+    // Add points to the NPC and check for lose condition
     public void AddNPCScore(int amount)
     {
         npcScore += amount;
         UpdateNPCScoreUI();
+
+        if (npcScore >= loseScore)
+        {
+            ShowLoseScreen();
+        }
     }
 
-    // Update the player's score UI
+    // Update player score UI
     private void UpdatePlayerScoreUI()
     {
         if (playerScoreText != null)
@@ -49,7 +62,7 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
-    // Update the NPC's score UI
+    // Update NPC score UI
     private void UpdateNPCScoreUI()
     {
         if (npcScoreText != null)
@@ -57,6 +70,27 @@ public class ScoreManager : MonoBehaviour
             npcScoreText.text = "NPC Score: " + npcScore;
         }
     }
+
+    // Show the Win Screen when the player reaches 7 points
+    private void ShowWinScreen()
+    {
+        if (winScreenCanvas != null)
+        {
+            winScreenCanvas.SetActive(true); // Display Win Screen UI
+        }
+        Time.timeScale = 0f; // Pause the game
+    }
+
+    // Show the Lose Screen when the NPC reaches 7 points
+    private void ShowLoseScreen()
+    {
+        if (loseScreenCanvas != null)
+        {
+            loseScreenCanvas.SetActive(true); // Display Lose Screen UI
+        }
+        Time.timeScale = 0f; // Pause the game
+    }
+
     public void StartCountdown(int duration)
     {
         StartCoroutine(CountdownRoutine(duration));
@@ -76,12 +110,11 @@ public class ScoreManager : MonoBehaviour
 
         if (countdownMessage != null)
         {
-            countdownMessage.gameObject.SetActive(false); // Hide the message after the countdown
+            countdownMessage.gameObject.SetActive(false); // Hide message after countdown
         }
-        UpdatePlayerScoreUI(); // Restore the original score text
+        UpdatePlayerScoreUI(); // Restore score display
     }
-
-
 }
+
 
 

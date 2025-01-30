@@ -51,6 +51,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Maze Midyear.sln",
+    "dotnet.defaultSolution": "maze.sln",
     "files.eol": "\n"
 }

@@ -361,6 +361,7 @@
 "Assets/Kevin Iglesias/Basic Motions/_DemoScene/Scripts/BasicMotionsCamera.cs"
 "Assets/Kevin Iglesias/Basic Motions/_DemoScene/Scripts/BasicMotionsCharacterController.cs"
 "Assets/MusicManager.cs"
+"Assets/SceneChanger.cs"
 "Assets/Scripts/Cell.cs"
 "Assets/Scripts/GameManager.cs"
 "Assets/Scripts/Item.cs"
